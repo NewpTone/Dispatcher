@@ -28,6 +28,7 @@ def readConfig(file="config.ini"):
         ip_pool.append(ip[1])
     for cmd in commands:
         cmd_pool.append(cmd[1])
+        print cmd[1]
     return ip_pool,cmd_pool
 
 def launcher(i,q,cmd):
@@ -36,7 +37,8 @@ def launcher(i,q,cmd):
         #grabs ip,cmd from queue
         ip = q.get()
         print "Thread %s: Running %s to %s" % (i,cmd,ip)
-        subprocess.call("ssh root@%s %s" %(ip,cmd), shell=True)
+        host = "root@%s"%ip
+        subprocess.call(["ssh", host, cmd])
         q.task_done()
     
 
